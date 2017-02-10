@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rbvmomi'
 
 def network_identifiers
-	datacenter.network.map do |network|
+datacenter.network.map do |network|
 		network.pretty_path.sub(/^#{datacenter.pretty_path}\/network\//, '')
 	end
 end
@@ -17,12 +17,12 @@ def datacenter
 		:datacenter => ''}
 
 	connection = RbVmomi::VIM.connect(
-	        host: iaas_configuration[:host],
-	        user: iaas_configuration[:user],
-	        password: iaas_configuration[:password],
-	        ssl: iaas_configuration[:ssl],
-	        insecure: iaas_configuration[:insecure],
-	        )
+		host: iaas_configuration[:host],
+	  user: iaas_configuration[:user],
+	  password: iaas_configuration[:password],
+	  ssl: iaas_configuration[:ssl],
+	  insecure: iaas_configuration[:insecure],
+	  )
 
 	result = connection.searchIndex.FindByInventoryPath(inventoryPath: iaas_configuration[:datacenter])
 
