@@ -2,9 +2,15 @@ require 'rubygems'
 require 'rbvmomi'
 
 def network_identifiers
-datacenter.network.map do |network|
-		network.pretty_path.sub(/^#{datacenter.pretty_path}\/network\//, '')
+	identifiers = datacenter.network.map do |net|
+		results = [net.name, net.pretty_path]
+		if net.is_a?(RbVmomi::VIM::DistributedVirtualPortgroup)
+			puts net.config.inspect
+			results << net.config.distributedVirtualSwitch.pretty_path + '/' + net.name
+		end
+		results.map { |path| path.sub(/^#{datacenter.pretty_path}\/network\//, '') }
 	end
+	identifiers.flatten.uniq
 end
 
 def datacenter
