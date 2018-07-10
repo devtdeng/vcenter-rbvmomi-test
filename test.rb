@@ -4,7 +4,6 @@ require 'rbvmomi'
 def network_identifiers
 	identifiers = datacenter.network.map do |net|
 		results = [net.name, net.pretty_path]
-		puts net.inspect
 		if net.is_a?(RbVmomi::VIM::DistributedVirtualPortgroup)
 			puts net.config.inspect
 			results << net.config.distributedVirtualSwitch.pretty_path + '/' + net.name
