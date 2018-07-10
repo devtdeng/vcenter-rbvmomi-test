@@ -10,8 +10,11 @@ def network_identifiers
 	identifiers = datacenter.network.map do |net|
 		results = [net.name, net.pretty_path]
 		if net.is_a?(RbVmomi::VIM::DistributedVirtualPortgroup)
-			puts net.config.inspect
-			results << net.config.distributedVirtualSwitch.pretty_path + '/' + net.name
+			if net.config.distributedVirtualSwitch.nil?
+				puts net.config.inspect
+			else
+				results << net.config.distributedVirtualSwitch.pretty_path + '/' + net.name
+			end
 		end
 		results.map { |path| path.sub(/^#{datacenter.pretty_path}\/network\//, '') }
 	end
