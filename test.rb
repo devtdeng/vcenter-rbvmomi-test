@@ -1,3 +1,8 @@
+# 1. replace with actual value in iaas_configuration
+# 2. gem install rbvmomi
+# 3. ruby test.rb > outputfile
+# 4. upload outputfile
+
 require 'rubygems'
 require 'rbvmomi'
 
